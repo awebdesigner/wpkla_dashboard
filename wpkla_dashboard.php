@@ -13,10 +13,25 @@ License: GPLv2 or later
 Text Domain: wpkla_dashboard
 */
 
-defined( 'ABSPATH' ) or die( 'Stop being naughty!' );
+defined( 'ABSPATH' ) or die( 'Slince is golden!' );
 
-
-/*Dashboard edits*/
+class wpDashboardClean {
+    private $metaboxIDs;
+    
+    function constructor($metaboxIDs = []) {
+        $this->metaboxIDs = $metaboxIDs;
+    }
+    
+    if(is_array($this->metaboxIDs)) :
+        foreach($this->metaboxIDs as $metaboxID) :
+            add_action('admin_init', function() {
+                remove_meta_box($metaboxID,!empty($metabox['location']) ? $metaboxID['location']:null,!empty($metabox['position']) ? $metaboxID['position']:null);
+            });
+        endforeach;
+   endif;
+}
+    
+/*Dashboard edits
 function remove_dashboard_meta() {
     remove_meta_box( 'dashboard_incoming_links', 'dashboard', 'normal' );
     remove_meta_box( 'dashboard_plugins', 'dashboard', 'normal' );
@@ -31,3 +46,4 @@ function remove_dashboard_meta() {
 }
 
 add_action( 'admin_init', 'remove_dashboard_meta' );
+*/
